@@ -807,6 +807,23 @@ module.exports = function(User) {
       UserModel.validatesUniquenessOf('username', {message: 'User already exists'});
     }
 
+    UserModel.once('attached', function() {
+      if ('logoutSessionsOnSensitiveChanges' in UserModel.settings) return;
+      g.warn([
+        '',
+        'The user model %j does not specify whether other sessions should be',
+        'invalidated when a password or an email was changed. Invalidating',
+        'sessions is important for security reasons, to allow users to recover',
+        'from the situation where an attacker got access to their account.',
+        'We are recommending to turn this feature on by setting',
+        '"{{logoutSessionsOnSensitiveChanges}}" to {{true}}, unless you have',
+        'implemented your own solution for token invalidation.',
+        'You should also enable "{{injectOptionsFromRemoteContext}}", which is',
+        'needed to determine the current session to prevent its invalidation.',
+        ''
+      ].join('\n'), UserModel.modelName);
+    });
+
     return UserModel;
   };
 

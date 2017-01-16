@@ -48,6 +48,8 @@ describe('User', function() {
       base: 'User',
       http: { path: 'test-users' },
       forceId: false,
+      logoutSessionsOnSensitiveChanges: true,
+      injectOptionsFromRemoteContext: true,
     });
     app.model(User, { dataSource: 'db' });
 
@@ -1975,6 +1977,10 @@ describe('User', function() {
     var currentEmailCredentials = {email: 'original@example.com', password: 'bar'};
     var updatedEmailCredentials = {email: 'updated@example.com', password: 'bar'};
     var newUserCred = {email: 'newuser@example.com', password: 'newpass'};
+
+    beforeEach(function enableTokenInvalidation() {
+      User.settings.autoLogoutOtherSessions = true;
+    });
 
     beforeEach('create user then login', function createAndLogin(done) {
       async.series([

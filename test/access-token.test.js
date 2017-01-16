@@ -427,7 +427,10 @@ describe('AccessToken', function() {
 
 describe('app.enableAuth()', function() {
   beforeEach(function setupAuthWithModels() {
-    app.enableAuth({ dataSource: ds });
+    app.enableAuth({
+      dataSource: ds,
+      logoutSessionsOnSensitiveChanges: true,
+    });
   });
   beforeEach(createTestingToken);
 
@@ -655,6 +658,7 @@ function givenLocalTokenModel() {
   app.dataSource('db', { connector: 'memory' });
 
   var User = app.registry.getModel('User');
+  User.settings.logoutSessionsOnSensitiveChanges = true;
   app.model(User, { dataSource: 'db' });
 
   var Token = app.registry.getModel('AccessToken');

@@ -14,5 +14,7 @@
       "principalType": "ROLE",
       "principalId": "$owner"
     }
-  ]
+  ],
+  "logoutSessionsOnSensitiveChanges": true,
+  "injectOptionsFromRemoteContext": true
 }

@@ -737,7 +737,10 @@ describe('app', function() {
     it('interprets extra first-level keys as options', function() {
       app.model('foo', {
         dataSource: 'db',
-        base: 'User'
+        base: 'User',
+        options: {
+          logoutSessionsOnSensitiveChanges: true,
+        }
       });
 
       expect(app.models.foo.definition.settings.base).to.equal('User');
@@ -924,7 +927,10 @@ describe('app', function() {
       require('../lib/builtin-models')(app.registry);
       var db = app.dataSource('db', { connector: 'memory' });
 
-      app.enableAuth({ dataSource: 'db' });
+      app.enableAuth({
+        dataSource: 'db',
+        logoutSessionsOnSensitiveChanges: true
+      });
 
       expect(Object.keys(app.models)).to.include.members(AUTH_MODELS);
 
@@ -938,10 +944,17 @@ describe('app', function() {
     it('detects already configured subclass of a required model', function() {
       var app = loopback({ localRegistry: true, loadBuiltinModels: true });
       var db = app.dataSource('db', { connector: 'memory' });
-      var Customer = app.registry.createModel('Customer', {}, { base: 'User' });
+      var Customer = app.registry.createModel('Customer', {}, {
+        base: 'User',
+        logoutSessionsOnSensitiveChanges: true,
+        injectOptionsFromRemoteContext: true,
+      });
       app.model(Customer, { dataSource: 'db' });
 
-      app.enableAuth({ dataSource: 'db' });
+      app.enableAuth({
+        dataSource: 'db',
+        logoutSessionsOnSensitiveChanges: true,
+      });
 
       expect(Object.keys(app.models)).to.not.include('User');
     });

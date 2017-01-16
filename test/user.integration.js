@@ -123,7 +123,8 @@ describe('users - integration', function() {
         name: 'UserWithContext',
         plural: 'ctx-users',
         base: 'User',
-        injectOptionsFromRemoteContext: true
+        injectOptionsFromRemoteContext: true,
+        logoutSessionsOnSensitiveChanges: true,
       });
       app.model(UserWithContext, {dataSource: 'db'});
 

@@ -20,5 +20,7 @@
       "principalId": "$everyone"
     }
   ],
-  "replaceOnPUT": false  
+  "logoutSessionsOnSensitiveChanges": true,
+  "injectOptionsFromRemoteContext": true,
+  "replaceOnPUT": false
 }

@@ -414,7 +414,9 @@ describe('Replication over REST', function() {
     plural: 'Users', // use the same REST path in all models
     trackChanges: true,
     strict: 'throw',
-    persistUndefinedAsNull: true
+    persistUndefinedAsNull: true,
+    logoutSessionsOnSensitiveChanges: true,
+    injectOptionsFromRemoteContext: true,
   };
 
   var CAR_PROPS = {

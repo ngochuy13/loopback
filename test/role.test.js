@@ -29,7 +29,10 @@ describe('role model', function() {
     app.model(ACL, { dataSource: 'db' });
 
     User = app.registry.getModel('User');
-    app.model(User, { dataSource: 'db' });
+    app.model(User, { dataSource: 'db' }, {
+      logoutSessionsOnSensitiveChanges: true,
+      injectOptionsFromRemoteContext: true,
+    });
 
     Role = app.registry.getModel('Role');
     app.model(Role, { dataSource: 'db' });
@@ -737,7 +740,10 @@ describe('role model', function() {
       var app = loopback({ localRegistry: true, loadBuiltinModels: true });
       app.dataSource('db', { connector: 'memory' });
       // attach all auth-related models to 'db' datasource
-      app.enableAuth({ dataSource: 'db' });
+      app.enableAuth({
+        dataSource: 'db',
+        logoutSessionsOnSensitiveChanges: true,
+      });
 
       var Role = app.models.Role;
       var User = app.models.User;

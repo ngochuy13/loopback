@@ -872,7 +872,10 @@ describe.onServer('Remote Methods', function() {
 
       app.model(TestModel, {dataSource: null});
 
-      app.enableAuth({dataSource: 'db'});
+      app.enableAuth({
+        dataSource: 'db',
+        logoutSessionsOnSensitiveChanges: true
+      });
 
       app.use(loopback.token());
       app.use(loopback.rest());

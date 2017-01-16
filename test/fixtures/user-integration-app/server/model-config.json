@@ -26,7 +26,10 @@
         "principalType": "ROLE",
         "principalId": "$owner"
       }
-    ]
+    ],
+    "options": {
+      "logoutSessionsOnSensitiveChanges": true
+    }
   },
   "AccessToken": {
     "dataSource": "db",

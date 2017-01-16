@@ -157,7 +157,7 @@ describe('loopback.rest', function() {
 
   it('includes loopback.token when necessary', function(done) {
     givenUserModelWithAuth();
-    app.enableAuth({ dataSource: 'db' });
+    app.enableAuth({dataSource: 'db', logoutSessionsOnSensitiveChanges: true});
     app.use(loopback.rest());
 
     givenLoggedInUser(function(err, token) {
@@ -348,7 +348,10 @@ describe('loopback.rest', function() {
     var AccessToken = app.registry.getModel('AccessToken');
     app.model(AccessToken, { dataSource: 'db' });
     var User = app.registry.getModel('User');
-    app.model(User, { dataSource: 'db' });
+    app.model(User, { dataSource: 'db' }, {
+      logoutSessionsOnSensitiveChanges: true,
+      injectOptionsFromRemoteContext: true,
+    });
 
     // NOTE(bajtos) This is puzzling to me. The built-in User & AccessToken
     // models should come with both relations already set up, i.e. the
